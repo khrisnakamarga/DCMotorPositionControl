@@ -87,10 +87,9 @@ int err;
 /*---------------------------------------------------------------------
 Function main()
 Purpose: creates the timer interrupt thread that performs
-		 real-time DC motor velocity control. Calls the
-		 ctable2 function to display the editable coefficients
-		 and the measured values. User is able to interract
-		 with the table through the keypad.
+		 real-time DC motor position control. Calls the
+		 ctable2 function to display the measured values.
+		 The user can press the DEL key to stop the motor.
 *---------------------------------------------------------------------*/
 int main(int argc, char **argv) {
 	MyRio_IrqTimer irqTimer0;
@@ -231,7 +230,7 @@ void *Timer_Irq_Thread(void* resource) {
 
 			// MATLAB Data
 			if (pact_pt < pact_buffer + IMAX) {
-				*torq_pt++ = (*VDAout) * k;
+				*torq_pt++ = (*VDAout) * k; // mNm
 				*pact_pt++ = *pact;
 				*pref_pt++ = *pref;
 			}
